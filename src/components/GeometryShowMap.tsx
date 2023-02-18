@@ -47,6 +47,7 @@ function GeometryShowMap(props: InputProps<any>) {
             "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
           center: [0, 0],
         }}
+        style={{ width: "100%", height: "400px" }}
       />
 
       {geojson && <MlGeoJsonLayer geojson={geojson}></MlGeoJsonLayer>}
