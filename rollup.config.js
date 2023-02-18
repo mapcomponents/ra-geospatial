@@ -39,7 +39,8 @@ const config = {
     "@mapcomponents/react-maplibre",
     "react-admin",
     "react",
-    "wellknown"
+    "wellknown",
+    "@turf/turf",
   ],
 
   onwarn: function (warning, warn) {

@@ -7,7 +7,8 @@ import {
   useMap,
 } from "@mapcomponents/react-maplibre";
 import { LngLatLike } from "maplibre-gl";
-import { feature } from "@turf/turf";
+import { feature, centroid } from "@turf/turf";
+import { Feature } from "@turf/helpers";
 
 function GeometryShowMap(props: InputProps<any>) {
   const source = props.source;
@@ -30,10 +31,11 @@ function GeometryShowMap(props: InputProps<any>) {
   useEffect(() => {
     if (!mapHook.map) return;
 
-    mapHook.map.setCenter(
-      (wellknownParse(record[source]) as unknown as GeoJSONPoint)
-        ?.coordinates as LngLatLike
-    );
+    const _center = centroid(wellknownParse(record[source]) as typeof Feature);
+
+    if (_center?.geometry?.coordinates) {
+      mapHook.map.setCenter(_center.geometry.coordinates as LngLatLike);
+    }
   }, [mapHook.map]);
 
   return (
@@ -47,19 +49,7 @@ function GeometryShowMap(props: InputProps<any>) {
         }}
       />
 
-      {geojson && (
-        <MlGeoJsonLayer
-          geojson={geojson}
-          paint={{
-            "circle-radius": 8,
-            "circle-color": "#0000ff",
-            "circle-stroke-color": "white",
-            "circle-stroke-width": 3,
-            "circle-opacity": 0.8,
-          }}
-          type="circle"
-        ></MlGeoJsonLayer>
-      )}
+      {geojson && <MlGeoJsonLayer geojson={geojson}></MlGeoJsonLayer>}
     </>
   );
 }
