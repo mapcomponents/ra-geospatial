@@ -10,7 +10,12 @@ import { LngLatLike } from "maplibre-gl";
 import { feature, centroid } from "@turf/turf";
 import { Feature } from "@turf/helpers";
 
-function GeometryShowMap(props: InputProps<any>) {
+export interface GeospatialShowMapProps extends InputProps<any> {
+  embeddedMap?: boolean;
+  mapId?: string;
+}
+
+function GeospatialShowMap(props: GeospatialShowMapProps) {
   const source = props.source;
   const record = useRecordContext();
   const mapHook = useMap();
@@ -40,19 +45,21 @@ function GeometryShowMap(props: InputProps<any>) {
 
   return (
     <>
-      <MapLibreMap
-        options={{
-          zoom: 14.5,
-          style:
-            "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
-          center: [0, 0],
-        }}
-        style={{ width: "100%", height: "400px" }}
-      />
+      {props.embeddedMap && (
+        <MapLibreMap
+          options={{
+            zoom: 14.5,
+            style:
+              "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
+            center: [0, 0],
+          }}
+          style={{ width: "100%", height: "400px" }}
+        />
+      )}
 
       {geojson && <MlGeoJsonLayer geojson={geojson}></MlGeoJsonLayer>}
     </>
   );
 }
 
-export default GeometryShowMap;
+export default GeospatialShowMap;

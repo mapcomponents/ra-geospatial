@@ -34,7 +34,7 @@ function __rest(s, e) {
 function GeospatialInputMap(props) {
     const source = props === null || props === void 0 ? void 0 : props.source;
     const record = useRecordContext();
-    const mapHook = useMap();
+    const mapHook = useMap({ mapId: props === null || props === void 0 ? void 0 : props.mapId });
     const [geojson, setGeojson] = useState();
     const [oldGeoJson, setOldGeoJson] = useState();
     const _a = useInput(props), _b = _a.field, { name, onChange } = _b; __rest(_b, ["name", "onChange"]);
@@ -61,41 +61,41 @@ function GeospatialInputMap(props) {
         }
     }, [mapHook.map]);
     return (React.createElement(React.Fragment, null,
-        React.createElement(MapLibreMap, { options: {
+        props.embeddedMap && (React.createElement(MapLibreMap, { options: {
                 zoom: 14.5,
                 style: "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
                 center: [7.0851268, 50.73884],
-            }, style: { width: "100%", height: "400px" } }),
+            }, style: { width: "100%", height: "400px" } })),
         props.type === "point" && (React.createElement(React.Fragment, null,
-            oldGeoJson && (React.createElement(MlGeoJsonLayer, { geojson: oldGeoJson, paint: {
+            oldGeoJson && (React.createElement(MlGeoJsonLayer, { mapId: props === null || props === void 0 ? void 0 : props.mapId, geojson: oldGeoJson, paint: {
                     "circle-radius": 8,
                     "circle-color": "#6f6f96",
                     "circle-stroke-color": "white",
                     "circle-stroke-width": 3,
                     "circle-opacity": 0.8,
-                }, type: "circle" })),
-            React.createElement(MlFeatureEditor, { geojson: geojson, mode: geojson ? "custom_select" : "draw_point", onChange: (_geojson) => {
+                }, type: "circle", insertBeforeLayer: "gl-draw-polygon-fill-inactive.cold" })),
+            React.createElement(MlFeatureEditor, { mapId: props === null || props === void 0 ? void 0 : props.mapId, geojson: geojson, mode: geojson ? "custom_select" : "draw_point", onChange: (_geojson) => {
                     if (typeof _geojson[0] !== "undefined") {
                         onChange(stringify(_geojson[0]));
                     }
                 } }))),
         props.type === "polygon" && (React.createElement(React.Fragment, null,
-            oldGeoJson && (React.createElement(MlGeoJsonLayer, { geojson: oldGeoJson, paint: {
+            oldGeoJson && (React.createElement(MlGeoJsonLayer, { mapId: props === null || props === void 0 ? void 0 : props.mapId, geojson: oldGeoJson, paint: {
                     "fill-color": "#6f6f96",
                     "fill-opacity": 0.6,
-                }, type: "fill" })),
-            React.createElement(MlFeatureEditor, { geojson: geojson, mode: geojson ? "custom_select" : "draw_polygon", onChange: (_geojson) => {
+                }, type: "fill", insertBeforeLayer: "gl-draw-polygon-fill-inactive.cold" })),
+            React.createElement(MlFeatureEditor, { mapId: props === null || props === void 0 ? void 0 : props.mapId, geojson: geojson, mode: geojson ? "custom_select" : "draw_polygon", onChange: (_geojson) => {
                     if (typeof _geojson[0] !== "undefined") {
                         onChange(stringify(_geojson[0]));
                     }
                 } }))),
         props.type === "line" && (React.createElement(React.Fragment, null,
-            oldGeoJson && (React.createElement(MlGeoJsonLayer, { geojson: oldGeoJson, paint: {
+            oldGeoJson && (React.createElement(MlGeoJsonLayer, { mapId: props === null || props === void 0 ? void 0 : props.mapId, geojson: oldGeoJson, paint: {
                     "line-width": 6,
                     "line-color": "#6f6f96",
                     "line-opacity": 0.6,
-                }, type: "line" })),
-            React.createElement(MlFeatureEditor, { geojson: geojson, mode: geojson ? "custom_select" : "draw_line_string", onChange: (_geojson) => {
+                }, type: "line", insertBeforeLayer: "gl-draw-polygon-fill-inactive.cold" })),
+            React.createElement(MlFeatureEditor, { mapId: props === null || props === void 0 ? void 0 : props.mapId, geojson: geojson, mode: geojson ? "custom_select" : "draw_line_string", onChange: (_geojson) => {
                     if (typeof _geojson[0] !== "undefined") {
                         onChange(stringify(_geojson[0]));
                     }
@@ -103,14 +103,18 @@ function GeospatialInputMap(props) {
 }
 GeospatialInputMap.defaultProps = {
     type: "point",
+    embeddedMap: true,
 };
 
 function GeospatialInput(props) {
-    return (React.createElement(MapComponentsProvider, null,
-        React.createElement(GeospatialInputMap, Object.assign({}, props))));
+    return (React.createElement(React.Fragment, null, props.embeddedMap ? (React.createElement(MapComponentsProvider, null,
+        React.createElement(GeospatialInputMap, Object.assign({}, props)))) : (React.createElement(GeospatialInputMap, Object.assign({}, props)))));
 }
+GeospatialInput.defaultProps = {
+    embeddedMap: true,
+};
 
-function GeometryShowMap(props) {
+function GeospatialShowMap(props) {
     const source = props.source;
     const record = useRecordContext();
     const mapHook = useMap();
@@ -136,18 +140,21 @@ function GeometryShowMap(props) {
         }
     }, [mapHook.map]);
     return (React.createElement(React.Fragment, null,
-        React.createElement(MapLibreMap, { options: {
+        props.embeddedMap && (React.createElement(MapLibreMap, { options: {
                 zoom: 14.5,
                 style: "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
                 center: [0, 0],
-            }, style: { width: "100%", height: "400px" } }),
+            }, style: { width: "100%", height: "400px" } })),
         geojson && React.createElement(MlGeoJsonLayer, { geojson: geojson })));
 }
 
-function GeometryShow(props) {
-    return (React.createElement(MapComponentsProvider, null,
-        React.createElement(GeometryShowMap, Object.assign({}, props))));
+function GeospatialShow(props) {
+    return (React.createElement(React.Fragment, null, props.embeddedMap ? (React.createElement(MapComponentsProvider, null,
+        React.createElement(GeospatialShowMap, Object.assign({}, props)))) : (React.createElement(GeospatialShowMap, Object.assign({}, props)))));
 }
+GeospatialShow.defaultProps = {
+    embeddedMap: true,
+};
 
-export { GeospatialInput as RaGeospatialInput, GeometryShow as RaGeospatialShow };
+export { GeospatialInput as RaGeospatialInput, GeospatialShow as RaGeospatialShow };
 //# sourceMappingURL=index.esm.js.map

@@ -20,12 +20,14 @@ import { Feature } from "@turf/helpers";
 export interface GeospatialInputMapProps extends InputProps<any> {
   MapLibreMapProps?: unknown;
   geometrytype?: "point" | "line" | "polygon";
+  embeddedMap?: boolean;
+  mapId?: string;
 }
 
 function GeospatialInputMap(props: GeospatialInputMapProps) {
   const source = props?.source;
   const record = useRecordContext();
-  const mapHook = useMap();
+  const mapHook = useMap({mapId:props?.mapId});
 
   const [geojson, setGeojson] = useState<typeof feature>();
   const [oldGeoJson, setOldGeoJson] = useState<typeof feature>();
@@ -65,20 +67,23 @@ function GeospatialInputMap(props: GeospatialInputMapProps) {
 
   return (
     <>
-      <MapLibreMap
-        options={{
-          zoom: 14.5,
-          style:
-            "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
-          center: [7.0851268, 50.73884],
-        }}
-        style={{ width: "100%", height: "400px" }}
-      />
+      {props.embeddedMap && (
+        <MapLibreMap
+          options={{
+            zoom: 14.5,
+            style:
+              "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
+            center: [7.0851268, 50.73884],
+          }}
+          style={{ width: "100%", height: "400px" }}
+        />
+      )}
 
       {props.type === "point" && (
         <>
           {oldGeoJson && (
             <MlGeoJsonLayer
+              mapId={props?.mapId}
               geojson={oldGeoJson as typeof feature}
               paint={{
                 "circle-radius": 8,
@@ -88,10 +93,12 @@ function GeospatialInputMap(props: GeospatialInputMapProps) {
                 "circle-opacity": 0.8,
               }}
               type="circle"
+              insertBeforeLayer="gl-draw-polygon-fill-inactive.cold"
             />
           )}
 
           <MlFeatureEditor
+            mapId={props?.mapId}
             geojson={geojson as typeof feature}
             mode={geojson ? "custom_select" : "draw_point"}
             onChange={(_geojson) => {
@@ -106,16 +113,19 @@ function GeospatialInputMap(props: GeospatialInputMapProps) {
         <>
           {oldGeoJson && (
             <MlGeoJsonLayer
+              mapId={props?.mapId}
               geojson={oldGeoJson as typeof feature}
               paint={{
                 "fill-color": "#6f6f96",
                 "fill-opacity": 0.6,
               }}
               type="fill"
+              insertBeforeLayer="gl-draw-polygon-fill-inactive.cold"
             />
           )}
 
           <MlFeatureEditor
+            mapId={props?.mapId}
             geojson={geojson as typeof feature}
             mode={geojson ? "custom_select" : "draw_polygon"}
             onChange={(_geojson) => {
@@ -130,6 +140,7 @@ function GeospatialInputMap(props: GeospatialInputMapProps) {
         <>
           {oldGeoJson && (
             <MlGeoJsonLayer
+              mapId={props?.mapId}
               geojson={oldGeoJson as typeof feature}
               paint={{
                 "line-width": 6,
@@ -137,10 +148,12 @@ function GeospatialInputMap(props: GeospatialInputMapProps) {
                 "line-opacity": 0.6,
               }}
               type="line"
+              insertBeforeLayer="gl-draw-polygon-fill-inactive.cold"
             />
           )}
 
           <MlFeatureEditor
+            mapId={props?.mapId}
             geojson={geojson as typeof feature}
             mode={geojson ? "custom_select" : "draw_line_string"}
             onChange={(_geojson) => {
@@ -157,6 +170,7 @@ function GeospatialInputMap(props: GeospatialInputMapProps) {
 
 GeospatialInputMap.defaultProps = {
   type: "point",
+  embeddedMap: true,
 };
 
 export default GeospatialInputMap;
