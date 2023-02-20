@@ -32,12 +32,13 @@ function __rest(s, e) {
 }
 
 function GeospatialInputMap(props) {
+    var _a, _b;
     const source = props === null || props === void 0 ? void 0 : props.source;
     const record = useRecordContext();
     const mapHook = useMap({ mapId: props === null || props === void 0 ? void 0 : props.mapId });
     const [geojson, setGeojson] = useState();
     const [oldGeoJson, setOldGeoJson] = useState();
-    const _a = useInput(props), _b = _a.field, { name, onChange } = _b; __rest(_b, ["name", "onChange"]);
+    const _c = useInput(props), _d = _c.field, { name, onChange } = _d; __rest(_d, ["name", "onChange"]);
     useEffect(() => {
         if (typeof record === "undefined" || !record[source])
             return;
@@ -61,11 +62,7 @@ function GeospatialInputMap(props) {
         }
     }, [mapHook.map]);
     return (React.createElement(React.Fragment, null,
-        props.embeddedMap && (React.createElement(MapLibreMap, { options: {
-                zoom: 14.5,
-                style: "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
-                center: [7.0851268, 50.73884],
-            }, style: { width: "100%", height: "400px" } })),
+        props.embeddedMap && (React.createElement(MapLibreMap, Object.assign({}, props === null || props === void 0 ? void 0 : props.MapLibreMapProps, { options: Object.assign({ zoom: 14, style: "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json", center: [0, 0] }, (_a = props === null || props === void 0 ? void 0 : props.MapLibreMapProps) === null || _a === void 0 ? void 0 : _a.options), style: Object.assign({ width: "100%", height: "400px" }, (_b = props === null || props === void 0 ? void 0 : props.MapLibreMapProps) === null || _b === void 0 ? void 0 : _b.style) }))),
         props.type === "point" && (React.createElement(React.Fragment, null,
             oldGeoJson && (React.createElement(MlGeoJsonLayer, { mapId: props === null || props === void 0 ? void 0 : props.mapId, geojson: oldGeoJson, paint: {
                     "circle-radius": 8,
@@ -115,36 +112,34 @@ GeospatialInput.defaultProps = {
 };
 
 function GeospatialShowMap(props) {
+    var _a, _b;
     const source = props.source;
     const record = useRecordContext();
     const mapHook = useMap();
     const [geojson, setGeojson] = useState();
     useEffect(() => {
-        if (typeof record === "undefined")
+        if (!(record === null || record === void 0 ? void 0 : record[source]))
             return;
-        setGeojson({
-            type: "Feature",
-            properties: {},
-            geometry: parse(record[source]),
-        });
-        //console.log(record)
-        //onChange({target:{value:"POINT(7.083199846086359 50.73716918021759)"}});
+        const _geometry = parse(record[source]);
+        if (_geometry) {
+            setGeojson({
+                type: "Feature",
+                properties: {},
+                geometry: _geometry,
+            });
+        }
     }, [record]);
     useEffect(() => {
         var _a;
-        if (!mapHook.map)
+        if (!mapHook.map || !geojson)
             return;
-        const _center = centroid(parse(record[source]));
+        const _center = centroid(geojson);
         if ((_a = _center === null || _center === void 0 ? void 0 : _center.geometry) === null || _a === void 0 ? void 0 : _a.coordinates) {
             mapHook.map.setCenter(_center.geometry.coordinates);
         }
-    }, [mapHook.map]);
+    }, [mapHook.map, geojson]);
     return (React.createElement(React.Fragment, null,
-        props.embeddedMap && (React.createElement(MapLibreMap, { options: {
-                zoom: 14.5,
-                style: "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
-                center: [0, 0],
-            }, style: { width: "100%", height: "400px" } })),
+        props.embeddedMap && (React.createElement(MapLibreMap, Object.assign({}, props === null || props === void 0 ? void 0 : props.MapLibreMapProps, { options: Object.assign({ zoom: 14, style: "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json", center: [0, 0] }, (_a = props === null || props === void 0 ? void 0 : props.MapLibreMapProps) === null || _a === void 0 ? void 0 : _a.options), style: Object.assign({ width: "100%", height: "400px" }, (_b = props === null || props === void 0 ? void 0 : props.MapLibreMapProps) === null || _b === void 0 ? void 0 : _b.style) }))),
         geojson && React.createElement(MlGeoJsonLayer, { geojson: geojson })));
 }
 

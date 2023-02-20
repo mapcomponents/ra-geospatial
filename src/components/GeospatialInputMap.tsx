@@ -18,7 +18,7 @@ import { feature, centroid } from "@turf/turf";
 import { Feature } from "@turf/helpers";
 
 export interface GeospatialInputMapProps extends InputProps<any> {
-  MapLibreMapProps?: unknown;
+  MapLibreMapProps?: React.ComponentProps<typeof MapLibreMap>;
   geometrytype?: "point" | "line" | "polygon";
   embeddedMap?: boolean;
   mapId?: string;
@@ -69,13 +69,19 @@ function GeospatialInputMap(props: GeospatialInputMapProps) {
     <>
       {props.embeddedMap && (
         <MapLibreMap
+          {...props?.MapLibreMapProps}
           options={{
-            zoom: 14.5,
+            zoom: 14,
             style:
               "https://wms.wheregroup.com/tileserver/style/klokantech-basic.json",
-            center: [7.0851268, 50.73884],
+            center: [0, 0],
+            ...props?.MapLibreMapProps?.options,
           }}
-          style={{ width: "100%", height: "400px" }}
+          style={{
+            width: "100%",
+            height: "400px",
+            ...props?.MapLibreMapProps?.style,
+          }}
         />
       )}
 
