@@ -34,7 +34,7 @@ Show component to display geospatial data.
 
 ## Examples
 
-```
+```JSX
 import {
   RaGeospatialInput,
   RaGeospatialShow,
