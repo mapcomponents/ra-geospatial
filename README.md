@@ -7,6 +7,11 @@
 
 Input and view components to work with geospatial data in react admin. This package is based on @mapcomponents/react-maplibre and uses MapLibre-gl to display geospatial data on a map.
 
+![RaGeospatialInput & RaGeospatialShow](https://github.com/mapcomponents/ra-geospatial/blob/main/assets/ra_geospatial_screenshots.png?raw=true)
+
+RaGeospatialInput & RaGeospatialShow used to edit a polygon geometry in a react-admin application.
+
+
 ## Installation
 
 ```bash
@@ -23,10 +28,6 @@ Input component to edit or create geospatial data.
 
 Show component to display geospatial data.
 
-![RaGeospatialInput & RaGeospatialShow](https://github.com/mapcomponents/ra-geospatial/blob/main/assets/ra_geospatial_screenshots.png?raw=true)
-
-RaGeospatialInput & RaGeospatialShow used to edit a polygon geometry in a react-admin application.
-
 #### Props
 
 - **embeddedMap**: boolean (default: false) - If true, the map will be embedded in the component. If false, the component will not create it's own MapContext and add a MapLibreMap component but instead expect a MapContext and a MapLibreMap component to be present in the parent component.
@@ -34,6 +35,11 @@ RaGeospatialInput & RaGeospatialShow used to edit a polygon geometry in a react-
 ## Examples
 
 ```
+import {
+  RaGeospatialInput,
+  RaGeospatialShow,
+} from "@mapcomponents/ra-geospatial";
+
 export const PoiEdit = () => (
   <Edit>
     <SimpleForm>
