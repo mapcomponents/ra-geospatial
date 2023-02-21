@@ -13,8 +13,8 @@ RaGeospatialInput & RaGeospatialShow used to edit a polygon geometry in a react-
 
 # Demos
 
-[react admin & mapcomponents Demo](https://cioddi.github.io/mc-react-admin-apps/react-admin-demo)
-[webGIS Demo (embeddedMap: false)](https://cioddi.github.io/mc-react-admin-apps/webgis-demo)
+- [react admin & mapcomponents Demo](https://cioddi.github.io/mc-react-admin-apps/react-admin-demo)
+- [webGIS Demo (embeddedMap: false)](https://cioddi.github.io/mc-react-admin-apps/webgis-demo)
 
 ## Installation
 
