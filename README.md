@@ -18,9 +18,13 @@ Input component to edit or create geospatial data.
 
 Show component to display geospatial data.
 
+![RaGeospatialInput & RaGeospatialShow](https://github.com/mapcomponents/ra-geospatial/blob/main/assets/ra_geospatial_screenshots.png?raw=true)
+
+**RaGeospatialInput & RaGeospatialShow**
+
 #### Props
 
-- embeddedMap: boolean (default: false) - If true, the map will be embedded in the component. If false, the component will not create it's own MapContext and add a MapLibreMap component but instead expect a MapContext and a MapLibreMap component to be present in the parent component.
+- **embeddedMap**: boolean (default: false) - If true, the map will be embedded in the component. If false, the component will not create it's own MapContext and add a MapLibreMap component but instead expect a MapContext and a MapLibreMap component to be present in the parent component.
 
 ## Examples
 
