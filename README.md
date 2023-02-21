@@ -15,11 +15,11 @@ yarn add @mapcomponents/ra-geospatial
 
 ## Exports
 
-### RaGeoSpatialInput
+### RaGeospatialInput
 
 Input component to edit or create geospatial data.
 
-### RaGeoSpatialShow
+### RaGeospatialShow
 
 Show component to display geospatial data.
 
