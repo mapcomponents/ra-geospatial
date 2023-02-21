@@ -11,6 +11,10 @@ Input and view components to work with geospatial data in react admin. This pack
 
 RaGeospatialInput & RaGeospatialShow used to edit a polygon geometry in a react-admin application.
 
+# Demos
+
+[react admin & mapcomponents Demo](https://cioddi.github.io/mc-react-admin-apps/react-admin-demo)
+[webGIS Demo (embeddedMap: false)](https://cioddi.github.io/mc-react-admin-apps/webgis-demo)
 
 ## Installation
 
