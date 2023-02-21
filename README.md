@@ -1,4 +1,9 @@
+<img src="https://avatars.githubusercontent.com/u/64851912" alt="MapComponents logo" width="80"/>
+
 # @mapcomponents/ra-geospatial
+
+[![npm version](https://badge.fury.io/js/@mapcomponents%2Fra-geospatial.svg)](https://badge.fury.io/js/@mapcomponents%2Fra-geospatial) [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT) ![downloads](https://img.shields.io/npm/dt/@mapcomponents%2Fra-geospatial.svg) ![downloads](https://img.shields.io/npm/dm/@mapcomponents%2Fra-geospatial.svg)
+
 
 Input and view components to work with geospatial data in react admin. This package is based on @mapcomponents/react-maplibre and uses MapLibre-gl to display geospatial data on a map.
 
@@ -20,7 +25,7 @@ Show component to display geospatial data.
 
 ![RaGeospatialInput & RaGeospatialShow](https://github.com/mapcomponents/ra-geospatial/blob/main/assets/ra_geospatial_screenshots.png?raw=true)
 
-**RaGeospatialInput & RaGeospatialShow**
+RaGeospatialInput & RaGeospatialShow used to edit a polygon geometry in a react-admin application.
 
 #### Props
 
